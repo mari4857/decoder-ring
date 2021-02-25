@@ -5,9 +5,21 @@
 
 const substitutionModule = (function () {
   // you can add any code you want within this function scope
+  // substitute alphabet examples: xoyqmcgrukswaflnthdjpzibev || pcrfdeonvmlthkzwubxsaqijyg
 
   function substitution(input, alphabet, encode = true) {
-    // your solution code here
+    if (alphabet.length !== 26) {
+      return false;
+    }
+    let alphabetCharacters = [];
+    for (let i = 0; i < alphabet.length; i++) {
+      const alphabetLetter = alphabet[i];
+      if (alphabet.includes(alphabetLetter)) {
+        return false;
+      } else {
+        alphabet.push(alphabetLetter);
+      }
+    }
   }
 
   return {
