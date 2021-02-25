@@ -113,27 +113,33 @@ const polybiusModule = (function () {
   ];
 
   function polybius(input, encode = true) {
-    // if the input contains a number, decode the input, otherwise encode it
-    if (/\d/.test(input)) {
-      console.log("decode input");
-    } else {
-      const encodedInput = [];
-      // loop through input
-      const inputLowerCase = input.toLowerCase();
-      for (let i = 0; i < inputLowerCase.length; i++) {
-        // for each input letter, loop through polybiusCypher
-        const inputLetter = input[i];
-        polybiusCypher.forEach(obj => {
-          // if input letter matches polybiusCypher obj.letter, add obj.number to an array
+    const encodedInput = [];
+    const inputLowerCase = input.toLowerCase();
+    const step = encode ? 1 : 2;
+    if (!encode && input.split(" ").join("").length % 2 !== 0) {
+      return false;
+    }
+    for (let i = 0; i < inputLowerCase.length; i += step) {
+      //return substring, starting at index and extending for the number of characters in `step`
+      const inputLetter = inputLowerCase.substr(i, step);
+      if (inputLetter.indexOf(" ") >= 0) {
+        encodedInput.push(" ");
+        if (!encode) i--;
+        continue
+      }
+      polybiusCypher.forEach(obj => {
+        if (encode) {
           if (inputLetter === obj.letter) {
             encodedInput.push(obj.number);
-          } else if (inputLetter === " ") {
-            encodedInput.push(inputLetter);
           }
-        })
-      }
-      return encodedInput.join("");
+        } else {
+          if (inputLetter === obj.number) {
+            encodedInput.push(obj.letter);
+          } 
+        }
+      })
     }
+    return encodedInput.join("");
   }
 
   return {
