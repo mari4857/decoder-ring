@@ -6,20 +6,41 @@
 const substitutionModule = (function () {
   // you can add any code you want within this function scope
   // substitute alphabet examples: xoyqmcgrukswaflnthdjpzibev || pcrfdeonvmlthkzwubxsaqijyg
-
   function substitution(input, alphabet, encode = true) {
-    if (alphabet.length !== 26) {
+    if (!alphabet || alphabet.length !== 26) {
       return false;
     }
-    let alphabetCharacters = [];
+    const letters = {};
     for (let i = 0; i < alphabet.length; i++) {
-      const alphabetLetter = alphabet[i];
-      if (alphabet.includes(alphabetLetter)) {
-        return false;
+      const letter = alphabet[i];
+      if (!letters[letter]) {
+        letters[letter] = true;
       } else {
-        alphabet.push(alphabetLetter);
+        return false;
       }
     }
+    const from = "abcdefghijklmnopqrstuvwxyz";
+    const inputLowerCase = input.toLowerCase();
+    let result = "";
+    for (let i = 0; i < inputLowerCase.length; i++) {
+      const inputLetter = inputLowerCase[i];
+      let index;
+      if (encode) {
+        index = from.indexOf(inputLetter)
+      } else {
+        index = alphabet.indexOf(inputLetter)
+      }
+      if (index < 0) {
+        result += inputLetter;
+      } else {
+        if (encode) {
+          result += alphabet[index];
+        } else {
+          result += from[index];
+        }
+      }
+    }
+    return result;
   }
 
   return {

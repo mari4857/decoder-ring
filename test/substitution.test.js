@@ -1,8 +1,6 @@
 const { expect } = require("chai");
 const substitution = require("../src/substitution");
 
-// All of the characters in the alphabet parameter must be unique. Otherwise, it should return false.
-
 describe("substitution", () => {
   it("input can include letters and special characters", () => {
     const input = "#helloworld!";
@@ -51,4 +49,4 @@ describe("substitution", () => {
     const expected = false;
     expect(actual).to.equal(expected);
   })
-}) 
+})
